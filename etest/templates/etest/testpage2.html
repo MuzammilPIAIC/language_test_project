@@ -1,0 +1,308 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{%block title%}
+      Start Your Test
+      {%endblock%} 
+
+
+{%block header%}
+    
+    <meta property="og:title" content="Tinted Firm Ant" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <style>
+      .container {
+        width: 80%;
+        max-width: 600px;
+        height: 400px;
+        background-color: white;
+        border-radius: 10px;
+        margin: 15% auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        position: relative;
+      }
+
+      .h2text {
+        padding: 8%;
+        
+      }
+  
+      .start-button {
+        background-color: #bd3f4b;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        position: absolute;
+        left: 50%;
+        top: 40%;
+        transform: translate(-50%, -50%);
+      }
+  
+      .corner-button {
+        background-color: blue;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        position: absolute;
+        bottom: 10px;
+        margin: 0 10px;
+        display: none;
+      }
+  
+      .corner-button.left {
+        left: 30%;
+        bottom: 18%;
+      }
+  
+      .corner-button.right {
+        right: 30%;
+        bottom: 18%;
+      }
+      .corner-button.middle {
+        left: 45.5%;
+        bottom: 18%;
+      }
+  
+      h2 {
+        text-align: center;
+      }
+
+      .recorder-timer{
+        position: absolute;
+        left: 44%;
+        bottom: 38%;
+        /* display: none; */
+      }
+  
+      /* Media Queries */
+@media (max-width: 1200px) {
+  .container {
+    width: 90%;
+    max-width: 600px;
+    margin: 10% auto;
+  }
+
+  .start-button {
+    top: 30%;
+  }
+
+  .corner-button {
+    bottom: 5px;
+  }
+
+  .recorder-timer {
+    bottom: 28%;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    height: 300px;
+  }
+
+  .start-button {
+    top: 30%;
+  }
+
+  .corner-button {
+    bottom: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    height: 250px;
+    margin: 20% auto;
+  }
+
+  .start-button {
+    top: 40%;
+  }
+
+  .corner-button {
+    display: block;
+    width: 30%;
+    padding: 8px 12px;
+    font-size: 12px;
+    bottom: 10px;
+  }
+
+  .corner-button.left {
+    left: 10px;
+  }
+
+  .corner-button.middle {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .corner-button.right {
+    right: 10px;
+  }
+
+  .recorder-timer {
+    display: none;
+  }
+      }
+    </style>
+
+    
+    {%endblock%}
+
+{%block body%}
+<div class="container">
+  {% csrf_token %}
+  <h2 class="h2text" id="question_h2"></h2>
+  <button class="start-button" id="startbtn">Start Test</button>
+  <div class="recorder-timer" id="timer"></div>
+  <button class="corner-button left" id="startrec">Start Recording</button>
+  <button class="corner-button middle" id="downloadButton">Download</button>
+  <button class="corner-button right" id="stoprec">Stop Recording</button>
+</div>
+
+    <script>
+
+const test_start = () => {
+        fetch(`{% url 'question_generator' %}`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('question_h2').textContent = data.message;
+          document.getElementById('question_h2').style.display = 'block';
+          document.getElementById('startbtn').style.display = 'none';
+          document.getElementById('startrec').style.display = 'block';
+          document.getElementById('stoprec').style.display = 'block';
+          // document.getElementById('downloadButton').style.display = 'block';
+          
+
+        })
+        .catch(error => {
+            console.error('Error downloading PDF:', error);
+        });
+    }
+
+      document.getElementById('startbtn').addEventListener('click', test_start);
+
+
+    //  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+    let mediaRecorder;
+  let startTime;
+
+  const startRecording = () => {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(stream => {
+        mediaRecorder = new MediaRecorder(stream);
+        const chunks = []; // Clear the previous recording chunks
+        startTime = Date.now();
+
+        mediaRecorder.addEventListener('dataavailable', event => {
+          chunks.push(event.data);
+        });
+
+        mediaRecorder.addEventListener('stop', () => {
+
+          const endTime = Date.now();
+          const elapsedTime = endTime - startTime;
+
+          const blob = new Blob(chunks, { type: 'audio/mp3' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'recording.mp3';
+          // a.click();
+          chunks.length = 0; // Clear the chunks after creating the download link
+
+          const formData = new FormData();
+          formData.append('audio', blob);
+
+          const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+          fetch("{% url 'audio_file' %}", {
+            method: 'POST',
+            headers: {
+              'X-CSRFToken': csrfToken
+            },
+            body: formData
+          })
+            .then(response => response.json())
+            .then(data => {
+              // Process the API response
+              document.getElementById('question_h2').textContent = "Your test is done.";
+              document.getElementById('downloadButton').style.display = 'block';
+              
+
+            })
+            .catch(error => {
+              console.error('Error sending recording:', error);
+            });
+        });
+
+        mediaRecorder.start();
+        console.log('Voice recording started...');
+        startTimer();
+      })
+      .catch(error => {
+        console.error('Error accessing microphone:', error);
+      });
+  };
+
+  const stopRecording = () => {
+    mediaRecorder.stop();
+    mediaRecorder.stream.getAudioTracks().forEach(track => track.stop()); // Stop the audio tracks
+    console.log('Voice recording stopped...');
+    stopTimer();
+  };
+
+  let timerInterval;
+  const startTimer = () => {
+    const timerElement = document.getElementById('timer');
+    let elapsedTime = 0;
+
+    timerInterval = setInterval(() => {
+      elapsedTime = Date.now() - startTime; // Calculate the elapsed time in milliseconds
+      const hours = Math.floor(elapsedTime / 3600000); // Convert milliseconds to hours
+      const minutes = Math.floor((elapsedTime % 3600000) / 60000); // Convert remaining milliseconds to minutes
+      const seconds = Math.floor((elapsedTime % 60000) / 1000); // Convert remaining milliseconds to seconds
+
+      const formattedTime = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+      timerElement.textContent = `Recording time: ${formattedTime}`;
+    }, 1000);
+  };
+
+  const padZero = (value) => {
+    return value.toString().padStart(2, '0');
+  };
+
+  const stopTimer = () => {
+    clearInterval(timerInterval);
+  };
+
+  const downloadCertificate = () => {
+        fetch(`{% url 'generate_certificate' %}`)
+        .then(response => response.blob())
+        .then(blob => {
+            const filename = 'certificate.png';
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+
+        })
+        .catch(error => {
+            console.error('Error downloading PDF:', error);
+        });
+    }
+
+    document.getElementById('startrec').addEventListener('click', startRecording);
+  document.getElementById('stoprec').addEventListener('click', stopRecording);
+  document.getElementById('downloadButton').addEventListener('click', downloadCertificate);
+
+  </script>
+
+
+
+  {%endblock%}

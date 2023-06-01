@@ -9,6 +9,7 @@ class BaseModel(models.Model):
 
 class AppUser(BaseModel):
     user                     =  models.OneToOneField(User, on_delete=models.CASCADE, blank=True, related_name = 'app_user')
+    input_user_name          =  models.CharField(max_length=255, null=False, blank=False)
     first_name               =  models.CharField(max_length=255, null=False, blank=False)
     last_name                =  models.CharField(max_length=255, null=False, blank=False)
     email                    =  models.EmailField(null=True,blank=True)
@@ -21,7 +22,7 @@ class AppUser(BaseModel):
 
     def save(self, *args, **kwargs):
         user = User.objects.create_user(
-            username=self.first_name,
+            username=self.input_user_name,
             email=self.email,
             password=self.password,
         )

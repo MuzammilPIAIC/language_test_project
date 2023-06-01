@@ -10,16 +10,6 @@
 <link rel="preload" as="image" href="{% static 'etest/_next/media/payroll.517af4e7.png' %}" fetchpriority="high" />
 <meta name="next-head-count" content="8" />
 
-<script>
-    (function (w, d, s, l, i) {
-        w[l] = w[l] || []; w[l].push({
-            'gtm.start':
-                new Date().getTime(), event: 'gtm.js'
-        }); var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                '../www.googletagmanager.com/gtm5445.html?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-MWXZQPT');
-</script>
 
 <link rel="preload" href="{% static 'etest/_next/css/eab9654d1869dfd9.css' %}" as="style" />
 <link rel="stylesheet" href="{% static 'etest/_next/css/eab9654d1869dfd9.css' %}" data-n-g="" />
@@ -30,9 +20,15 @@
 <script src="{% static 'etest/_next/chunks/main-ffb99bdac9bf3a04.js' %}" defer=""></script>
 <script src="{% static 'etest/_next/chunks/pages/_app-8526ac403bb24ce1.js' %}" defer=""></script>
 <script src="{% static 'etest/_next/chunks/186-bb2cd6bdcda08aee.js' %}" defer=""></script>
-<script src="{% static 'etest/_next/chunks/pages/index-4b56581aa4b94aa1.js' %}" defer=""></script>
 <script src="{% static 'etest/_next/7sWYYXXejz5Pd1w5q0J0o/_buildManifest.js' %}" defer=""></script>
 <script src="{% static 'etest/_next/7sWYYXXejz5Pd1w5q0J0o/_ssgManifest.js' %}" defer=""></script>
+
+<script src="{% static 'etest/_next/chunks/pages/index-4b56581aa4b94aa1.js' %}" defer=""></script>
+
+
+
+
+
 
 {%endblock%}
 
@@ -44,8 +40,6 @@
 
 
 
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MWXZQPT" height="0" width="0"
-        style="display:none;visibility:hidden"></iframe></noscript>
 <div id="__next">
     <header class="py-10">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -92,7 +86,7 @@
             <p class="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">Prepare for Any Interview with
                 Confidence: Practice Screening Interviews or Excel in the Later Rounds with AI-Powered Questions
                 Tailored to Your Dream Job.</p>
-            <div class="mt-10 flex justify-center gap-x-6"><a href="#"
+            <div class="mt-10 flex justify-center gap-x-6"><a href="{% url 'resgister' %}"
                     class="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-slate-900 text-white hover:bg-slate-700 hover:text-slate-100 active:bg-slate-800 active:text-slate-300 focus-visible:outline-slate-900"
                     target="_blank">Try now for free</a></div>
             <div class="mt-36 lg:mt-44">
