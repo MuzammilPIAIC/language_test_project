@@ -131,7 +131,7 @@ def generate_certificate(request):
     font_size = 40
     font_color = (0, 0, 0)  # Black color
 
-    new_text = str(request.user.app_user.user)  # Replace with the new text you want to use
+    new_text = str(request.user.app_user.first_name) + " " + str(request.user.app_user.last_name)  # Replace with the new text you want to use
 
     
     edited_image = template_image.copy()
