@@ -103,7 +103,7 @@ def audio_file(request):
 
             data = {
                 'status' : 200,
-                'message':encoded_token,
+                'message':'Pre-intermediate level (CERF A2)',
                 # 'next_page_token' : encoded_token,
                 'data' : []
             }
@@ -121,10 +121,19 @@ def audio_file(request):
 from PIL import Image, ImageDraw, ImageFont
 from django.http import HttpResponse
 @login_required(login_url='/')
-def generate_certificate(request):
+def generate_certificate(request,level):
     # Load the certificate design image
-    template_path = settings.STATIC_ROOT + '/certificate_template.png'  # Replace with the actual path to your certificate design image
+    template_path = settings.STATIC_ROOT + '/new_certificate_template.png'  # Replace with the actual path to your certificate design image
     template_image = Image.open(template_path)
+
+
+    # certificate levels
+    # Beginner level (CERF A1)
+    # Pre-intermediate level (CERF A2)
+    # Intermediate level (CERF B1)
+    # Upper-Intermediate level	 (CERF B2)
+    # Advanced	level (CERF C1)
+    # Proficiency level (CERF C2)
 
     # Specify the font type, size, and color
     font_path = settings.STATIC_ROOT + '/PTSerif_Bold.ttf'  # Replace with the actual path to your font file
@@ -132,6 +141,8 @@ def generate_certificate(request):
     font_color = (0, 0, 0)  # Black color
 
     new_text = str(request.user.app_user.first_name) + " " + str(request.user.app_user.last_name)  # Replace with the new text you want to use
+    level_text = str(level)
+
 
     
     edited_image = template_image.copy()
@@ -141,10 +152,15 @@ def generate_certificate(request):
     # Find the position to place the new text
     text_width, text_height = draw.textsize(new_text, font=font)
     position = ((edited_image.width - (text_width-30)) // 2, (edited_image.height - (text_height+250)) // 2)
-    
-
     # Replace the old text with the new text
     draw.text(position, new_text, font=font, fill=font_color)
+
+
+    text_width, text_height = draw.textsize(level_text, font=font)
+    position = ((edited_image.width - (text_width-30)) // 2, (edited_image.height - (text_height-20)) // 2)
+    # Replace the old text with the new text
+    draw.text(position, level_text, font=font, fill=font_color)
+    
 
     # Create a response and save the edited image
     response = HttpResponse(content_type='image/png')

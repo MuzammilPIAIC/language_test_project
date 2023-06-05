@@ -29,7 +29,7 @@
       }
   
       .start-button {
-        background-color: #bd3f4b;
+        background-color: rgb(89, 46, 207);
         color: white;
         border: none;
         border-radius: 5px;
@@ -76,6 +76,12 @@
         bottom: 38%;
         /* display: none; */
       }
+
+      img{
+        width: 50%;
+        margin-top: 13%;
+        margin-left: 24%;
+      }
   
       /* Media Queries */
 @media (max-width: 1200px) {
@@ -99,6 +105,8 @@
 }
 
 @media (max-width: 768px) {
+
+ 
   .container {
     height: 300px;
   }
@@ -160,15 +168,19 @@
   <button class="corner-button left" id="startrec">Start Recording</button>
   <button class="corner-button middle" id="downloadButton">Download</button>
   <button class="corner-button right" id="stoprec">Stop Recording</button>
+  
 </div>
 
     <script>
 
-const test_start = () => {
-        fetch(`{% url 'question_generator' %}`)
+const test_start = () => { 
+        // fetch(`{% url 'question_generator' %}`)
+        fetch("https://voice-ranker-test.azurewebsites.net/api/random-prompt",{
+          method: 'POST'
+        })
         .then(response => response.json())
         .then(data => {
-          document.getElementById('question_h2').textContent = data.message;
+          document.getElementById('question_h2').textContent = data.prompt;
           document.getElementById('question_h2').style.display = 'block';
           document.getElementById('startbtn').style.display = 'none';
           document.getElementById('startrec').style.display = 'block';
@@ -229,9 +241,9 @@ const test_start = () => {
             .then(response => response.json())
             .then(data => {
               // Process the API response
-              document.getElementById('question_h2').textContent = "Your test is done.";
+              document.getElementById('question_h2').textContent = data.message;
               document.getElementById('downloadButton').style.display = 'block';
-              
+
 
             })
             .catch(error => {
@@ -280,7 +292,9 @@ const test_start = () => {
   };
 
   const downloadCertificate = () => {
-        fetch(`{% url 'generate_certificate' %}`)
+        let level = document.getElementById('question_h2').textContent
+        // fetch("{% url 'generate_certificate' 'level' %}")
+        fetch(`/get-certificate/${level}`)
         .then(response => response.blob())
         .then(blob => {
             const filename = 'certificate.png';
@@ -288,8 +302,11 @@ const test_start = () => {
 
             const a = document.createElement('a');
             a.href = url;
+            console.log('sdssdsdsd: ', a.href)
             a.download = filename;
             a.click();
+
+           
 
         })
         .catch(error => {
