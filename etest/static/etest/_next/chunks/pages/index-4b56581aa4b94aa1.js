@@ -28,12 +28,28 @@
                 })
             }
 
+            // function o(e) {
+            //     return (0, a.jsx)("span", {
+            //         ...e,
+            //         children: "Speaklab"
+            //     })
+            // }
             function o(e) {
-                return (0, a.jsx)("span", {
+                return (
+                  (0, a.jsx)("div", {
                     ...e,
-                    children: "Speaklab"
-                })
-            }
+                    children: [
+                      (0, a.jsx)("img", {
+                        src: "/static/etest/Logowhite2.jpg",
+                        alt: "Speaklab",
+                        style: { width: "30px" },
+                      }),
+                      
+                    ],
+                  })
+                );
+              }
+
 
             function A(e) {
                 let {
@@ -250,7 +266,7 @@
                                 children: [(0, a.jsx)(u, {
                                     href: "/register/",
                                     color: "blue",
-                                    style: { backgroundColor: "rgb(67, 172, 67)" },
+                                    style: { backgroundColor: "rgb(89, 46, 207)" },
                                     target: "_blank",
                                     children: (0, a.jsxs)("span", {
                                         children: ["Попробовать  бесплатно", (0, a.jsx)("span", {
@@ -330,8 +346,8 @@
                                     d: "M203.371.916c-26.013-2.078-76.686 1.963-124.73 9.946L67.3 12.749C35.421 18.062 18.2 21.766 6.004 25.934 1.244 27.561.828 27.778.874 28.61c.07 1.214.828 1.121 9.595-1.176 9.072-2.377 17.15-3.92 39.246-7.496C123.565 7.986 157.869 4.492 195.942 5.046c7.461.108 19.25 1.696 19.17 2.582-.107 1.183-7.874 4.31-25.75 10.366-21.992 7.45-35.43 12.534-36.701 13.884-2.173 2.308-.202 4.407 4.442 4.734 2.654.187 3.263.157 15.593-.78 35.401-2.686 57.944-3.488 88.365-3.143 46.327.526 75.721 2.23 130.788 7.584 19.787 1.924 20.814 1.98 24.557 1.332l.066-.011c1.201-.203 1.53-1.825.399-2.335-2.911-1.31-4.893-1.604-22.048-3.261-57.509-5.556-87.871-7.36-132.059-7.842-23.239-.254-33.617-.116-50.627.674-11.629.54-42.371 2.494-46.696 2.967-2.359.259 8.133-3.625 26.504-9.81 23.239-7.825 27.934-10.149 28.304-14.005.417-4.348-3.529-6-16.878-7.066Z"
                                 })
                             }), (0, a.jsx)("span", {
-                                className: "relative",
-                                style: { color: "rgb(67, 172, 67)" },
+                                className: "relative mid-heading",
+                                style: { color: "rgb(89, 46, 207)" },
                                 children: "разговорного английского"
                             })]
                         }), " ", "языка"]
@@ -390,7 +406,7 @@
             }
             var R = s(9965),
                 D = {
-                    src: "/static/etest/_next/media/background-features.5f7a9ac9.jpg",
+                    src: "/static/etest/_next/media/purplebg.png",
                     height: 3272,
                     width: 4490,
                     blurDataURL: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoKCgoKCgsMDAsPEA4QDxYUExMUFiIYGhgaGCIzICUgICUgMy03LCksNy1RQDg4QFFeT0pPXnFlZXGPiI+7u/sBCgoKCgoKCwwMCw8QDhAPFhQTExQWIhgaGBoYIjMgJSAgJSAzLTcsKSw3LVFAODhAUV5PSk9ecWVlcY+Ij7u7+//CABEIAAYACAMBIgACEQEDEQH/xAAnAAEBAAAAAAAAAAAAAAAAAAAABQEBAAAAAAAAAAAAAAAAAAAABv/aAAwDAQACEAMQAAAAmB4f/8QAGRABAQADAQAAAAAAAAAAAAAAAQIAA0Fx/9oACAEBAAE/AC9M6kIW3rzzP//EABURAQEAAAAAAAAAAAAAAAAAAAAC/9oACAECAQE/AJf/xAAXEQEBAQEAAAAAAAAAAAAAAAABAgAR/9oACAEDAQE/ALAp5v/Z",
@@ -398,7 +414,7 @@
                     blurHeight: 6
                 };
             let F = [{
-                title: "Практикуйся эффективно",
+                title: "Практикуй эффективно",
                 description: "Измеряй уровень разговорного языка по мере изучения и подготовки к интервью и собеседованиям",
                 image: {
                     src: "/static/etest/_next/media/vat-returns.7402820f.png",
@@ -1017,6 +1033,7 @@
                     featured: o = !1
                 } = e;
                 return (0, a.jsxs)("section", {
+                    style: { backgroundColor: "rgb(89, 46, 207)"},
                     className: (0, n.Z)("flex flex-col rounded-3xl px-6 sm:px-8", o ? "order-first bg-blue-600 py-8 lg:order-none" : "lg:py-8"),
                     children: [(0, a.jsx)("h3", {
                         className: "mt-5 font-display text-lg text-white",
@@ -1073,9 +1090,11 @@
                                 }), " ", "бесплатный"]
                             }), (0, a.jsx)("p", {
                                 className: "mt-4 text-lg text-slate-400",
+                                
                                 children: "Лучший способ помочь нам - поделиться сервисом со своими друзьями и всеми, кто может получить пользу из его использования."
                             })]
                         }), (0, a.jsx)("div", {
+                            
                             className: "mx-auto mt-16 flex justify-center",
                             children: (0, a.jsx)(J, {
                                 featured: !0,
