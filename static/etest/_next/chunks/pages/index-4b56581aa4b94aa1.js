@@ -334,9 +334,10 @@
                 return (0, a.jsxs)(l, {
                     className: "pt-20 pb-16 text-center lg:pt-32",
                     children: [(0, a.jsxs)("h1", {
+                        // style: { marginLeft: "30px" },
                         className: "mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl",
                         children: ["Проверь свой уровнь", " ", (0, a.jsxs)("span", {
-                            className: "relative whitespace-nowrap text-blue-600",
+                            className: "relative text-blue-600",
                             children: [(0, a.jsx)("svg", {
                                 "aria-hidden": "true",
                                 viewBox: "0 0 418 42",
@@ -371,12 +372,12 @@
                             className: "mt-8 flex items-center justify-center gap-x-8 sm:flex-col sm:gap-x-0 sm:gap-y-10 xl:flex-row xl:gap-x-12 xl:gap-y-0",
                             children: [
                                 [{
-                                    text: '<img src="/static/etest/deadline.png" alt="" style="width: 50px; height: 50px; margin-left: 124px;"><br><b>Быстро</b><br>Результат через 5 минут',
+                                    text: '<img src="/static/etest/deadline.png" alt="" style="width: 50px; height: 50px; margin-left: 150px;"><br><b>Быстро</b><br>Результат через 5 минут',
                                     style: "width: 303px;"
                                 }, {
-                                    text: '<img src="/static/etest/trust.png" alt="" style="width: 50px; height: 50px; margin-left: 177px;"><br><b>Объективно</b><br>Искусственный интеллект обучен на сотнях тысяч часов интервью'
+                                    text: '<img src="/static/etest/trust.png" alt="" style="width: 50px; height: 50px; margin-left: 165px;"><br><b>Объективно</b><br>Искусственный интеллект обучен на сотнях тысяч часов интервью'
                                 }, {
-                                    text: '<img src="/static/etest/certificate_icon.png" alt="" style="width: 40px; height: 40px; margin-left: 160px;"><br><b>Сертификат</b><br>Выдаем сертификат, который можно прикрепить к резюме'
+                                    text: '<img src="/static/etest/certificate_icon.png" alt="" style="width: 40px; height: 40px; margin-left: 155px;"><br><b>Сертификат</b><br>Выдаем сертификат, который можно прикрепить к резюме'
                                 }]
                             ].map(function(e, t) {
                                 return (0, a.jsx)("li", {
@@ -391,7 +392,7 @@
                                                         __html: e.text
                                                     },
                                                     style: index === 0 ? {
-                                                        width: '303px',
+                                                        width: '360px',
                                                         marginBottom: '27px'
                                                     } : null
                                                 })

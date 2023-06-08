@@ -199,8 +199,9 @@ const test_start = () => {
 
     //  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-    let mediaRecorder;
-  let startTime;
+    let mediaRecorder; // Declare mediaRecorder variable
+  let chunks = []; // Initialize chunks array
+  let startTime; // Declare startTime variable
 
   const startRecording = () => {
     navigator.mediaDevices.getUserMedia({ audio: true })
@@ -225,23 +226,32 @@ const test_start = () => {
           a.download = 'recording.mp3';
           // a.click();
           chunks.length = 0; // Clear the chunks after creating the download link
+          
+          let prompt2 = document.getElementById('question_h2').textContent
 
           const formData = new FormData();
           formData.append('audio', blob);
+          formData.append('prompt', prompt2);
 
           const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-          fetch("{% url 'audio_file' %}", {
+          // fetch("{% url 'audio_file' %}", {
+          fetch("https://voice-ranker-test.azurewebsites.net/api/speech_ranking", {
             method: 'POST',
-            headers: {
-              'X-CSRFToken': csrfToken
-            },
+            // headers: {
+            //       // Set the Content-Type header to specify "multipart/form-data"
+            //       'Content-Type': 'multipart/form-data'
+            //     },
+            // headers: {
+            //   'X-CSRFToken': csrfToken
+            // },
             body: formData
           })
             .then(response => response.json())
             .then(data => {
               // Process the API response
-              document.getElementById('question_h2').textContent = data.message;
+              document.getElementById('question_h2').textContent = data.rank;
+              // document.getElementById('question_h2').textContent = data.message;
               document.getElementById('downloadButton').style.display = 'block';
 
 
