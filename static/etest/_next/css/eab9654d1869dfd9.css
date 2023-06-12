@@ -1708,6 +1708,7 @@ body.active {
 .icon-divs{
 
     padding-left: 0px !important;
+    padding-right: 6%;
 }
 
 @media (max-width:500px) {
