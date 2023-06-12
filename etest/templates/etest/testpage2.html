@@ -3,11 +3,11 @@
 
 {%block title%}
       Start Your Test
-      {%endblock%} 
+      {%endblock%}
 
 
 {%block header%}
-    
+
     <meta property="og:title" content="Tinted Firm Ant" />
     <meta charset="utf-8" />
     <meta property="twitter:card" content="summary_large_image" />
@@ -25,9 +25,9 @@
 
       .h2text {
         padding: 8%;
-        
+
       }
-  
+
       .start-button {
         background-color: rgb(89, 46, 207);
         color: white;
@@ -39,7 +39,7 @@
         top: 40%;
         transform: translate(-50%, -50%);
       }
-  
+
       .corner-button {
         background-color: blue;
         color: white;
@@ -51,12 +51,12 @@
         margin: 0 10px;
         display: none;
       }
-  
+
       .corner-button.left {
         left: 30%;
         bottom: 18%;
       }
-  
+
       .corner-button.right {
         right: 30%;
         bottom: 18%;
@@ -65,7 +65,7 @@
         left: 45.5%;
         bottom: 18%;
       }
-  
+
       h2 {
         text-align: center;
       }
@@ -82,7 +82,7 @@
         margin-top: 13%;
         margin-left: 24%;
       }
-  
+
       /* Media Queries */
 @media (max-width: 1200px) {
   .container {
@@ -106,7 +106,7 @@
 
 @media (max-width: 768px) {
 
- 
+
   .container {
     height: 300px;
   }
@@ -140,23 +140,29 @@
 
   .corner-button.left {
     left: 10px;
+    width: 100px;
   }
 
   .corner-button.middle {
     left: 50%;
     transform: translateX(-50%);
+    width: 100px;
   }
   .corner-button.right {
     right: 10px;
+    width: 100px;
   }
 
   .recorder-timer {
-    display: none;
+    display: block;
+    margin-bottom: 47px;
+    margin-left: -68px;
+}
   }
-      }
+      
     </style>
 
-    
+
     {%endblock%}
 
 {%block body%}
@@ -168,25 +174,27 @@
   <button class="corner-button left" id="startrec">Start Recording</button>
   <button class="corner-button middle" id="downloadButton">Download</button>
   <button class="corner-button right" id="stoprec">Stop Recording</button>
-  
+
 </div>
 
     <script>
 
-const test_start = () => { 
+const test_start = () => {
         // fetch(`{% url 'question_generator' %}`)
-        fetch("https://voice-ranker-test.azurewebsites.net/api/random-prompt",{
+        fetch("https://speech-examiner.azurewebsites.net/api/random-prompt",{
           method: 'POST'
         })
         .then(response => response.json())
         .then(data => {
           document.getElementById('question_h2').textContent = data.prompt;
+        //   document.getElementById('question_h2').textContent = 'tell us';
           document.getElementById('question_h2').style.display = 'block';
           document.getElementById('startbtn').style.display = 'none';
           document.getElementById('startrec').style.display = 'block';
           document.getElementById('stoprec').style.display = 'block';
+
           // document.getElementById('downloadButton').style.display = 'block';
-          
+
 
         })
         .catch(error => {
@@ -199,9 +207,8 @@ const test_start = () => {
 
     //  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-    let mediaRecorder; // Declare mediaRecorder variable
-  let chunks = []; // Initialize chunks array
-  let startTime; // Declare startTime variable
+    let mediaRecorder;
+  let startTime;
 
   const startRecording = () => {
     navigator.mediaDevices.getUserMedia({ audio: true })
@@ -219,29 +226,23 @@ const test_start = () => {
           const endTime = Date.now();
           const elapsedTime = endTime - startTime;
 
-          const blob = new Blob(chunks, { type: 'audio/mp3' });
+          const blob = new Blob(chunks, { type: 'audio/wav' });
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = 'recording.mp3';
-          // a.click();
+          a.download = 'recording.wav';
+          a.click();
           chunks.length = 0; // Clear the chunks after creating the download link
-          
-          let prompt2 = document.getElementById('question_h2').textContent
-
+          let prompt_text = document.getElementById('question_h2').textContent
           const formData = new FormData();
           formData.append('audio', blob);
-          formData.append('prompt', prompt2);
+          formData.append('prompt', prompt_text);
 
           const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-          // fetch("{% url 'audio_file' %}", {
-          fetch("https://voice-ranker-test.azurewebsites.net/api/speech_ranking", {
+        //   fetch("{% url 'audio_file' %}", {
+          fetch("https://speech-examiner.azurewebsites.net/api/speech_ranking", {
             method: 'POST',
-            // headers: {
-            //       // Set the Content-Type header to specify "multipart/form-data"
-            //       'Content-Type': 'multipart/form-data'
-            //     },
             // headers: {
             //   'X-CSRFToken': csrfToken
             // },
@@ -251,8 +252,10 @@ const test_start = () => {
             .then(data => {
               // Process the API response
               document.getElementById('question_h2').textContent = data.rank;
-              // document.getElementById('question_h2').textContent = data.message;
+            //   document.getElementById('question_h2').innerHTML += '<p id="resultp"> is your result</p>';
               document.getElementById('downloadButton').style.display = 'block';
+            //   document.getElementById('resulth2').style.display = 'block';
+            //   document.getElementById('question_h2').textContent = data.rank;
 
 
             })
@@ -302,9 +305,36 @@ const test_start = () => {
   };
 
   const downloadCertificate = () => {
+        // Beginner level (CERF A1)
+        // Pre-intermediate level (CERF A2)
+        // Intermediate level (CERF B1)
+        // Upper-Intermediate level	 (CERF B2)
+        // Advanced	level (CERF C1)
+        // Proficiency level (CERF C2)
+
         let level = document.getElementById('question_h2').textContent
+        let final_level = ''
+        if (level == 'A1'){
+            final_level = 'Beginner level (CERF A1)'
+        }
+        else if (level == 'A2'){
+            final_level = 'Pre-intermediate level (CERF A2)'
+        }
+        else if (level == 'B1'){
+            final_level = 'Intermediate level (CERF B1)'
+        }
+        else if (level == 'B2'){
+            final_level = 'Upper-Intermediate level	 (CERF B2)'
+        }
+        else if (level == 'C1'){
+            final_level = 'Advanced	level (CERF C1)'
+        }
+        else if (level == 'C2'){
+            final_level = 'Proficiency level (CERF C2)'
+        }
+        console.log("HHHHHHHHHHHHHHHHHHHHHH ", final_level)
         // fetch("{% url 'generate_certificate' 'level' %}")
-        fetch(`/get-certificate/${level}`)
+        fetch(`/get-certificate/${final_level}`)
         .then(response => response.blob())
         .then(blob => {
             const filename = 'certificate.png';
@@ -316,7 +346,7 @@ const test_start = () => {
             a.download = filename;
             a.click();
 
-           
+
 
         })
         .catch(error => {

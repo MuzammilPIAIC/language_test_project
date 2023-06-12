@@ -114,7 +114,7 @@ def audio_file(request):
 
             data = {
                 'status' : 200,
-                'message':'Pre-intermediate level (CERF A2)',
+                'rank':'A1',
                 # 'next_page_token' : encoded_token,
                 'data' : []
             }
@@ -204,7 +204,7 @@ def question_generator(request):
     
         data = {
             'status' : 200,
-            'message':'Tell us about yourself',
+            'prompt':'Tell us about yourself',
             'data' : []
         }
         return JsonResponse(data)
